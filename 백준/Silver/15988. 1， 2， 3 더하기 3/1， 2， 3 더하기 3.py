@@ -16,9 +16,11 @@ def tile(n):
     for i in range(4,n+1):
         dp[i] = (dp[i-1] + dp[i-2] + dp[i-3])%1000000009
         
-tile(1000000)
+
 Ta = []    
 for i in range(T):
     n = int(input())
-    Ta.append(dp[n])
-print('\n'.join(map(str,Ta)))
+    Ta.append(n)
+tile(max(Ta))
+for i in Ta:
+    print(dp[i])
