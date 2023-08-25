@@ -48,18 +48,6 @@ void dfs(int x, int y){
 	}
 		
 }
-	
-void printmap(){
-	cout << "=============\n";
-	for (int i = 0; i < N; i++)
-	{
-		for (int j = 0; j < N; j++)
-		{
-			cout << visit[i][j] << " ";
-		}
-		cout << "\n";
-	}
-}
 
 int main() {
 	ios::sync_with_stdio(0); cin.tie(0);
