@@ -1,73 +1,96 @@
-#include <vector>
-#include <iostream>
-#include <deque>
-#include <queue>
-#include <set>
-#include <algorithm>
-#include <string>
-#include <map>
+#include <bits/stdc++.h>
 using namespace std;
+using ll = long long;
+using ull = unsigned long long;
+using ip = pair<int, int>;
+using ld = long double;
+using lp = pair<ll, ll>;
 
-const int root = 1;
-int unused = 2;
-const int MX = 10000 * 500 + 5;
-bool chk[MX];
-int nxt[MX][26];
+#define all(v) (v).begin(), (v).end()
+#define f first
+#define s second
+#define mp make_pair
+#define pb push_back
 
-int c2i (char c){
-    return c - 'a';
-}
- 
-void insert(string& s){
-    int cur = root;
-    for (auto c : s){
-        if (nxt[cur][c2i(c)] == -1)
+#ifndef ONLINE_JUDGE
+#include "DEBUG.h"
+#else
+#define debug(x...)
+#endif
+
+
+struct trie
+{
+    trie* next[26];
+    bool endpoint;
+
+    trie() {
+        endpoint = false;
+        for (int i = 0; i < 26; i++)
         {
-            nxt[cur][c2i(c)] = unused++;
+            next[i] = nullptr;
         }
-        cur = nxt[cur][c2i(c)];
     }
-    chk[cur] = true;
-}
-
-bool find(string& s){
-    int cur = root;
-    for (auto c : s){
-        if (nxt[cur][c2i(c)] == -1){
-            return false;
+    ~trie() {
+        for (int i = 0; i < 26; i++)
+        {
+            if (next[i] != nullptr)
+            {
+                delete next[i];
+            }
         }
-        cur = nxt[cur][c2i(c)];
     }
-    return 1;
-}
+    void insert(string& a, int idx)
+    {
+        if (idx == a.size())
+        {
+            endpoint = true;
+            return;
+        }
+        if (next[a[idx]-'a'] == nullptr)
+        {
+            next[a[idx]-'a'] = new trie;
+        }
+        next[a[idx]-'a']->insert(a,idx+1);
+    }
+    int search(string& a, int idx)
+    {
+        if (idx == a.size())
+        {
+            return 1;
+        }
+        if (next[a[idx]-'a'] == nullptr)
+        {
+            return 0;
+        }
+        return next[a[idx]-'a']->search(a,idx+1);
+    }
+};
 
-int main() {
-	ios::sync_with_stdio(0); cin.tie(0);
-
-	int n, m;
-    int cnt = 0;    
-	cin >> n >> m;
-	for (int i = 0; i < MX; i++)
+void solve()
+{
+    int N, M;
+    cin >> N >> M;
+    trie T;
+    string a;
+    int cnt = 0;
+    for (int i = 0; i < N; i++)
     {
-        fill(nxt[i], nxt[i] + 26, -1);
-    }
-    for (int i = 0; i < n; i++)
-    {
-        string a;
         cin >> a;
-        insert(a);
+        T.insert(a,0);
     }
-    for (int i = 0; i < m; i++)
+    for (int i = 0; i < M; i++)
     {
-        string a;
         cin >> a;
-        
-        cnt += find(a);
+        cnt += T.search(a,0);
     }
-    
     cout << cnt;
-    
-    
+}
 
-	
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+    solve();
 }
