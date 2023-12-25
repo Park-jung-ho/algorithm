@@ -1,0 +1,71 @@
+#include <bits/stdc++.h>
+using namespace std;
+using ll = long long;
+using ull = unsigned long long;
+using ip = pair<int, int>;
+using ld = long double;
+using lp = pair<ll, ll>;
+
+#define all(v) (v).begin(), (v).end()
+#define f first
+#define s second
+#define mp make_pair
+#define pb push_back
+
+#ifndef ONLINE_JUDGE
+#include "C:\DEBUG.h"
+#else
+#define debug(x...)
+#endif
+
+void solve()
+{
+    int n, a;
+    ll cnt = 0;
+    cin >> n;
+    stack<int> st;
+    while (n--)
+    {
+        cin >> a;
+        if (st.empty())
+        {
+            st.push(a);
+        }
+        else if (st.top() > a)
+        {
+            cnt += st.size();
+            st.push(a);
+        }
+        else
+        {
+            while (!st.empty())
+            {
+                if (st.top() > a)
+                {
+                    break;
+                }
+                st.pop();
+            }
+            if (st.empty())
+            {
+                st.push(a);
+            }
+            else
+            {
+                cnt += st.size();
+                st.push(a);
+            }
+            
+        }
+    }
+    cout << cnt;
+    
+}
+
+int main()
+{
+    ios_base::sync_with_stdio(0);
+    cin.tie(0);
+
+    solve();
+}
