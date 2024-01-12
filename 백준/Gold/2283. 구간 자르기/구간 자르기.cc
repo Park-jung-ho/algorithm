@@ -36,7 +36,7 @@ void solve()
     int b = 1;
     ll len = arr[0];
 
-    while (1)
+    while (a <= b)
     {
         if (b > mx) break;
         if (len == k) break;
