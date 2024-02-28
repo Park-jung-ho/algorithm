@@ -27,30 +27,30 @@ void solve()
         if (c < 0) b.push_back(-c);
         else a.push_back(c);
     }
-    sort(all(a));
-    sort(all(b));
+    sort(all(a),greater<>());
+    sort(all(b),greater<>());
     ll res = 0;
     int cnt = 0;
     for (int i = 0; i < a.size(); i++)
     {
-        cnt++;
-        if (cnt == k)
+        if (cnt == 0 || cnt == k)
         {
             cnt = 0;
             res += a[i]*2;
         }
+        cnt++;
     }
+    cnt = 0;
     for (int i = 0; i < b.size(); i++)
     {
-        cnt++;
-        if (cnt == k)
+         if (cnt == 0 || cnt == k)
         {
             cnt = 0;
             res += b[i]*2;
         }
+        cnt++;
     }
     cout << res;
-    
 }
 
 int main()
