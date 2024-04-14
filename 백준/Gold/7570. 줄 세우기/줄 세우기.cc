@@ -16,16 +16,16 @@ using lp = pair<ll, ll>;
 
 void solve()
 {
-    int n;
+    int n, c, t;
     cin >> n;
-    vector<int> a(n);
-    vector<int> b(n+1);
-    for (auto& c : a) cin >> c;
+    vector<int> a(n+1);
     int res = 0;
-    for (int i = 0; i < n; i++)
+    t = n;
+    while (t--)
     {
-        b[a[i]] = b[a[i]-1] + 1;
-        res = max(res,b[a[i]]);
+        cin >> c;
+        a[c] = a[c-1] + 1;
+        res = max(res,a[c]);
     }
     cout << n - res;
 }
