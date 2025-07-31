@@ -55,7 +55,6 @@ public class Algorithm
                 foreach (int i in clist)
                 {
                     tmp = Math.Min(tmp, (Math.Abs(h.Item1 - Chicken[i].Item1) + Math.Abs(h.Item2 - Chicken[i].Item2)));
-                    if (tmp == 1) break;
                 }
                 cnt += tmp;
                 if (cnt >= res) break;
