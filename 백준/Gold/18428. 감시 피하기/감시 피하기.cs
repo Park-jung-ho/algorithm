@@ -3,7 +3,46 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-int N = int.Parse(Console.ReadLine());
+byte[] buffer = new byte[1 << 20];
+int bufferLength = 0, bufferIndex = 0;
+
+byte ReadByte()
+{
+    if (bufferIndex == bufferLength)
+    {
+        bufferLength = Console.OpenStandardInput().Read(buffer, 0, 1 << 20);
+        if (bufferLength == 0) return 255;
+        bufferIndex = 0;
+    }
+    return buffer[bufferIndex++];
+}
+int ReadInt()
+{
+    int result = 0, sign = 1;
+    byte b = ReadByte();
+    while (b < '0' || b > '9')
+    {
+        if (b == '-') sign = -1;
+        b = ReadByte();
+    }
+    while (b >= '0' && b <= '9')
+    {
+        result = result * 10 + (b - '0');
+        b = ReadByte();
+    }
+    return result * sign;
+}
+char ReadChar()
+{
+    byte b = ReadByte();
+    while (b <= ' ')
+    {
+        b = ReadByte();
+    }
+    return (char)b;
+}
+
+int N = ReadInt();
 char[,] map = new char[N,N];
 bool res = false;
 int[] dx = new int[4] { -1, 1, 0, 0 };
@@ -11,17 +50,15 @@ int[] dy = new int[4] { 0, 0, -1, 1 };
 List<Tuple<int, int>> TList = new List<Tuple<int, int>>();
 for (int i = 0; i < N; i++)
 {
-    var input = Console.ReadLine().Split().ToArray();
     for (int j = 0; j < N; j++)
     {
-        map[i, j] = input[j][0];
+        map[i, j] = ReadChar();
         if (map[i,j] == 'T')
         {
             TList.Add(new Tuple<int, int>(i, j));
         }
     }
 }
-
 SetWall(0,0,0);
 Console.WriteLine(res ? "YES" : "NO");
 
@@ -71,8 +108,9 @@ void Check()
                     break;
                 }
             }
+            if (!can) break;
         }
+        if (!can) break;
     }
     res = can;
 }
-
