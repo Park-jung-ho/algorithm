@@ -71,9 +71,7 @@ void Check()
                     break;
                 }
             }
-            if (!can) break;
         }
-        if (!can) break;
     }
     res = can;
 }
